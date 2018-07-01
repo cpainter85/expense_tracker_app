@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="page-header">
+    <div class="float-right">
+      <%= link_to "Add new account", new_account_path, class: "btn btn-outline-primary" %>
+    </div>
+    <h1>Accounts</h1>
+  </div>
+
+    <% @accounts.each do |type, accounts| %>
+      <h5><%= type %></h5>
+
+      <% accounts.each do |account| %>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <%= account.name %> 
+            <span>
+              <%= link_to edit_account_path(account) do %>
+                <%= fa_icon 'edit', alt: "edit account" %>
+              <% end %>
+            </span>
+          </li>
+        </ul>
+      <% end %>
+
+    <% end %>
+  
+</div>
