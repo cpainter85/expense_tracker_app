@@ -14,6 +14,17 @@ class AccountsController < ApplicationController
       redirect_to accounts_path, notice: "#{@account.name} was successfully added to your accounts"
     end
   end
+
+  def edit
+    @account = Account.find(params[:id])
+  end
+
+  def update
+    @account = Account.find(params[:id])
+    if @account.update(account_params)
+      redirect_to accounts_path, notice: "#{@account.name} was successfully updated"
+    end
+  end
   
   private
   

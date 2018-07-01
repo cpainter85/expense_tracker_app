@@ -11,7 +11,14 @@
 
       <% accounts.each do |account| %>
         <ul class="list-group">
-          <li class="list-group-item"><%= account.name %></li>
+          <li class="list-group-item">
+            <%= account.name %> 
+            <span>
+              <%= link_to edit_account_path(account) do %>
+                <%= fa_icon 'edit', alt: "edit account" %>
+              <% end %>
+            </span>
+          </li>
         </ul>
       <% end %>
 
