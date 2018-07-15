@@ -19,4 +19,8 @@ describe AccountSerializer do
   it "includes the credit_limit" do
     expect(account_json).to include(credit_limit: account.credit_limit)
   end
+
+  it "includes the account_type" do
+    expect(account_json).to include(account_type: account.account_type)
+  end
 end
