@@ -45,4 +45,10 @@ module ElasticsearchActivity
   def as_indexed_json
     ActivitySerializer.new(self).as_json
   end
+
+  module ClassMethods
+    def versioned_index
+      "#{__elasticsearch__.index_name}_v#{const_get("ElasticsearchActivity::VERSION")}"
+    end
+  end
 end

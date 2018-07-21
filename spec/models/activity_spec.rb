@@ -102,5 +102,16 @@ describe Activity do
         expect(activity.as_indexed_json).to eq ActivitySerializer.new(activity).as_json
       end
     end
+
+    describe "#versioned_index" do
+      before :each do
+        stub_const("ElasticsearchActivity::VERSION", 5)
+        allow(Activity).to receive_message_chain(:__elasticsearch__, :index_name).and_return("activities")
+      end
+
+      it "returns the index name with the version" do
+        expect(Activity.versioned_index).to eq "activities_v5"
+      end
+    end
   end
 end
