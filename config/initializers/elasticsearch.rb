@@ -1,0 +1,1 @@
+Elasticsearch::Model.client = Elasticsearch::Client.new log: true, host: ENV.fetch("ELASTICSEARCH_HOST", "localhost")

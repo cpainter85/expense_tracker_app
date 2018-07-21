@@ -38,6 +38,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
 gem 'jquery-rails', '~> 4.3', '>= 4.3.3'
 gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
+gem 'elasticsearch-model', '~> 5.0', '>= 5.0.2'
+gem 'active_model_serializers', '~> 0.10.7'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7', '>= 3.7.2'
