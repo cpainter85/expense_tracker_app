@@ -2,6 +2,10 @@ class AccountsController < ApplicationController
   def index
     @accounts = Account.order(:account_type, :name).group_by(&:account_type)
   end
+
+  def show
+    @account = Account.find(params[:id])
+  end
   
   def new
     @account = Account.new
