@@ -1,0 +1,13 @@
+<ul class="nav nav-pills nav-justified">
+  <li class="nav-item">
+    <%= link_to "Accounts Overview", accounts_path, class: "nav-link #{active_tab?(accounts_path) || active_tab?(root_path)}" %>
+  </li>
+  <% accounts.each do |account| %>
+    <li class="nav-item">
+      <%= link_to "#{account.name}", account_path(account), class: "nav-link #{active_tab?(account_path(account))}" %>
+    </li>
+  <% end %>
+  <li class="nav-item">
+    <%= link_to "Categories", categories_path, class: "nav-link #{active_tab?(categories_path)}" %>
+  </li>
+</ul>

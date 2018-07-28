@@ -6,10 +6,10 @@
     <h1>Accounts</h1>
   </div>
 
-    <% @accounts.each do |type, accounts| %>
+    <% accounts.group_by(&:account_type).each do |type, grouped_accounts| %>
       <h5><%= type %></h5>
 
-      <% accounts.each do |account| %>
+      <% grouped_accounts.each do |account| %>
         <ul class="list-group">
           <li class="list-group-item">
             <%= account.name %> 

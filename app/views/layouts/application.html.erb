@@ -10,6 +10,8 @@
   </head>
 
   <body>
+    <%= render 'layouts/nav' %>
+
     <% if flash[:notice] %>
       <div class="alert alert-success" role="alert">
         <%= flash[:notice] %>
