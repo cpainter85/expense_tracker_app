@@ -14,7 +14,8 @@ describe "Accounts" do
   describe "PUT /accounts/:id/" do
     let(:account) { create(:account, name: "Foo", credit_limit: 100) }
     let(:updated_attributes) { { name: "Bar", credit_limit: 500} }
-    it "creates a new Account" do
+    
+    it "updates an Account" do
       put "/accounts/#{account.id}", params: { account: updated_attributes }
       expect(response).to redirect_to(accounts_path)
       account.reload
