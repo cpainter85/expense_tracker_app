@@ -58,6 +58,9 @@ RSpec.configure do |config|
 
   WebMock.disable_net_connect!
 
+  config.before(:each) do
+    stub_request(:any, /elasticsearch/)
+  end
 end
 
 Shoulda::Matchers.configure do |config|

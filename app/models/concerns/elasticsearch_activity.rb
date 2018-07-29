@@ -42,7 +42,7 @@ module ElasticsearchActivity
     end
   end
 
-  def as_indexed_json
+  def as_indexed_json(args={})
     ActivitySerializer.new(self).as_json
   end
 
