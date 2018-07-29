@@ -1,1 +1,18 @@
-<h1>Categories</h1>
+<div class="container">
+  <div class="page-header">
+    <%= link_to "Add new category", new_category_path, class: "btn btn-outline-primary" %>
+  </div>
+
+  <ul class="list-group list-group-flush">
+    <% @categories.each do |category| %>
+      <li class="list-group-item">
+        <%= category.name %>
+        <span>
+          <%= link_to edit_category_path(category) do %>
+            <%= fa_icon 'edit', alt: "edit category" %>
+          <% end %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+</div>
