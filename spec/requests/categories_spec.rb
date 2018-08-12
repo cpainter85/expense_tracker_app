@@ -22,14 +22,4 @@ describe "Categories" do
       expect(category.name).to eq "Bar"
     end
   end
-
-  describe "DELETE /categories/:id" do
-    let(:category) { create(:category) }
-
-    it "deletes a Category" do
-      delete "/categories/#{category.id}"
-      expect(response).to redirect_to(categories_path)
-      expect { Category.find(category.id) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
 end

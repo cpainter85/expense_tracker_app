@@ -26,13 +26,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def destroy
-    @category = Category.find(params[:id])
-    if @category.destroy
-      redirect_to categories_path, notice: "#{@category.name} was successfully destroyed"
-    end
-  end
-
   private
 
   def category_params

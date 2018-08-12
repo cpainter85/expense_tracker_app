@@ -6,14 +6,9 @@
   <ul class="list-group list-group-flush">
     <% @categories.each do |category| %>
       <li class="list-group-item">
-        <%= link_to category_path(category), method: :delete, data: {confirm: "Are you sure?"} do %>
-          <%= fa_icon 'trash', alt: "edit category" %>
+        <%= link_to edit_category_path(category) do %>
+          <%= fa_icon 'edit', alt: "edit category" %>
         <% end %>
-          <span>
-          <%= link_to edit_category_path(category) do %>
-            <%= fa_icon 'edit', alt: "edit category" %>
-          <% end %>
-        </span>
         <span>
           <%= category.name %>
         </span>
