@@ -16,4 +16,43 @@ describe Account do
       account.update_activity_documents
     end
   end
+
+  describe '#get_activities' do
+    let(:account) { create(:account) }
+    let(:response_double) { double }
+
+    before :each do
+      allow(response_double).to receive(:per).with(25)
+    end
+
+    it "queries Elasticsearch for all activities belonging to the account" do
+      expect(Activity).to receive(:search).with({ 
+        query: {
+          bool: {
+            filter: [ { term: { "account.id" => account.id } } ]
+          }
+        },
+        sort: [{ transaction_date: :desc } ],
+        aggs: {
+          total_balance: {
+            sum: { field: :amount }
+          }
+        }
+      }).and_return(response_double)
+
+      expect(response_double).to receive(:page).with(1).and_return(response_double)
+
+      account.get_activities
+    end
+
+    context "given a page argument" do
+      it "calls page on the response object with the given page number" do
+        allow(Activity).to receive(:search).and_return(response_double)
+
+        expect(response_double).to receive(:page).with(2).and_return(response_double)
+
+        account.get_activities(page: 2)
+      end
+    end
+  end
 end

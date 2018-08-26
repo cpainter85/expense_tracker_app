@@ -11,4 +11,24 @@ class Account < ApplicationRecord
       data: { account: AccountSerializer.new(self).as_json }
     )
   end
+
+  def get_activities(args={})
+    page = args[:page] || 1
+
+    response = Activity.search({ 
+      query: {
+        bool: {
+          filter: [ { term: { "account.id" => self.id } } ]
+        }
+      },
+      sort: [{ transaction_date: :desc } ],
+      aggs: {
+        total_balance: {
+          sum: { field: :amount }
+        }
+      }
+    })
+
+    response.page(page).per(25)
+  end
 end

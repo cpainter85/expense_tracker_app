@@ -1,1 +1,31 @@
-<h1><%= @account.name %></h1>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Current Balance: <%= number_to_currency(@total_balance) %></h5>
+    <% if @account.credit_limit %>
+      <h6 class="card-subtitle mb-2 text-muted">Remaining Credit: <%= number_to_currency(@account.credit_limit - @total_balance) %></h6>
+    <% end %>
+  </div>
+</div>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Merchant</th>
+      <th scope="col">Category</th>
+      <th scope="col">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @activities.each do |activity| %>
+      <tr>
+        <th scope="row"><%= activity.transaction_date %></th>
+        <td><%= activity.merchant %></td>
+        <td><%= activity.category.name %></td>
+        <td><%= number_to_currency(activity.amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= render 'layouts/pagination', account: @account, resp: @response %>
