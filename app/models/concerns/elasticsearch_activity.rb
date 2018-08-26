@@ -42,13 +42,28 @@ module ElasticsearchActivity
     end
   end
 
-  def as_indexed_json
+  def as_indexed_json(args={})
     ActivitySerializer.new(self).as_json
   end
 
   module ClassMethods
     def versioned_index
       "#{__elasticsearch__.index_name}_v#{const_get("ElasticsearchActivity::VERSION")}"
+    end
+
+    def bulk_update_activity_documents(args)
+      request_body = args[:activity_ids].map do |activity_id|
+        {
+          update: {
+            _index: Activity.versioned_index,
+            _type: Activity.document_type,
+            _id: activity_id,
+            data: { doc: args[:data] }
+          }
+        }
+      end
+
+      Activity.__elasticsearch__.client.bulk(body: request_body)
     end
   end
 end

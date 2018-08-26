@@ -103,15 +103,46 @@ describe Activity do
       end
     end
 
-    describe "#versioned_index" do
-      before :each do
-        stub_const("ElasticsearchActivity::VERSION", 5)
-        allow(Activity).to receive_message_chain(:__elasticsearch__, :index_name).and_return("activities")
+    describe "ClassMethods" do
+      describe "::versioned_index" do
+        before :each do
+          stub_const("ElasticsearchActivity::VERSION", 5)
+          allow(Activity).to receive_message_chain(:__elasticsearch__, :index_name).and_return("activities")
+        end
+
+        it "returns the index name with the version" do
+          expect(Activity.versioned_index).to eq "activities_v5"
+        end
       end
 
-      it "returns the index name with the version" do
-        expect(Activity.versioned_index).to eq "activities_v5"
+      describe "::bulk_update_activity_documents" do
+        let(:activity_ids) { [1,2,3,4] }
+        let(:data) { { foo: "bar"} }
+
+        before :each do
+          allow(Activity).to receive(:versioned_index).and_return("activities_v1")
+          allow(Activity).to receive(:document_type).and_return("activity")
+        end
+
+        it "makes an Elasticsearch bulk update request for all documents with the given ids" do
+          expected_request_body = activity_ids.map do |id|
+            {
+              update: {
+                _index: "activities_v1",
+                _type: "activity",
+                _id: id,
+                data: { doc: data }
+              }
+            }
+          end
+
+          expect(Activity).to receive_message_chain(:__elasticsearch__, :client, :bulk)
+            .with(body: expected_request_body)
+
+          Activity.bulk_update_activity_documents(activity_ids: activity_ids, data: data)
+        end
       end
     end
+    
   end
 end
