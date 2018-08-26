@@ -4,6 +4,11 @@ class AccountsController < ApplicationController
 
   def show
     @account = Account.find(params[:id])
+
+    @response = @account.get_activities(page: params[:page])
+
+    @activities = @response.results.map(&:_source)
+    @total_balance = @response.aggregations.total_balance.value
   end
   
   def new
