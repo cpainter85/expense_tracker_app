@@ -9,7 +9,11 @@ class ActivitiesController < ApplicationController
     @activity = @account.activities.new(activity_params)
 
     if @activity.save
+      sleep(1)
       redirect_to account_path(@account), notice: "Activity on #{@activity.transaction_date} for #{@activity.amount} sucessfully added to account"
+    else
+      flash.now[:error] = "Something went wrong"
+      render :new
     end
   end
 

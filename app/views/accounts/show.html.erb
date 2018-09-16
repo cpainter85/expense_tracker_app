@@ -1,9 +1,11 @@
 <div class="card">
   <div class="card-body">
+    <%= link_to "Add Activity", new_account_activity_path(@account), class: "btn btn-outline-primary btn-lg float-right" %>
     <h5 class="card-title">Current Balance: <%= number_to_currency(@total_balance) %></h5>
     <% if @account.credit_limit %>
       <h6 class="card-subtitle mb-2 text-muted">Remaining Credit: <%= number_to_currency(@account.credit_limit - @total_balance) %></h6>
     <% end %>
+
   </div>
 </div>
 
