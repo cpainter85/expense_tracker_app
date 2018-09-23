@@ -16,6 +16,7 @@
       <th scope="col">Merchant and Description</th>
       <th scope="col">Category</th>
       <th scope="col">Amount</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -30,6 +31,11 @@
         </td>
         <td><%= activity.category.name %></td>
         <td><%= number_to_currency(activity.amount) %></td>
+        <td>
+          <%= link_to edit_account_activity_path(@account, activity.id) do %>
+            <%= fa_icon 'edit', alt: "edit activity" %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
