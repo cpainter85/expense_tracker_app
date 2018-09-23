@@ -34,6 +34,16 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def destroy
+    @account = Account.find(params[:account_id])
+    @activity = @account.activities.find(params[:id])
+
+    if @activity.destroy
+      sleep(1)
+      redirect_to account_path(@account), notice: "Activity on #{@activity.transaction_date} for #{@activity.amount} sucessfully deleted"
+    end
+  end
+
   private
 
   def activity_params

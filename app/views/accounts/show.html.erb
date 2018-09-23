@@ -35,6 +35,9 @@
           <%= link_to edit_account_activity_path(@account, activity.id) do %>
             <%= fa_icon 'edit', alt: "edit activity" %>
           <% end %>
+          <%= link_to account_activity_path(@account, activity.id), method: :delete, data: {confirm: "Are you sure you want to delete this activity?"} do %>
+            <%= fa_icon 'trash  ', alt: "delete activity" %>
+          <% end %>
         </td>
       </tr>
     <% end %>
