@@ -27,7 +27,7 @@ describe "Activties" do
     end
   end
 
-  describe "PUT /account/:account_id/activities" do
+  describe "PUT /account/:account_id/activities/:id" do
     let(:activity) { create(:activity, amount: 100, cleared: false) }
     
     it "updates the Activity" do
@@ -46,5 +46,17 @@ describe "Activties" do
         expect(activity.cleared).not_to eq true
       end
     end
+  end
+
+  describe "DELETE /account/:account_id/activities/:id" do
+    let!(:activity) { create(:activity) }
+    
+    it "deletes the Activity" do
+      expect { delete "/accounts/#{activity.account_id}/activities/#{activity.id}" }
+        .to change {Activity.count}.by(-1)
+      
+      expect(Activity.find_by(id: activity.id)).to be nil
+    end
+
   end
 end
