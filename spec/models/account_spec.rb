@@ -15,6 +15,17 @@ describe Account do
 
       account.update_activity_documents
     end
+
+    context "Account has NO activities" do
+      before :each do
+        account.activities.destroy_all
+      end
+
+      it "does nothing" do
+        expect(Activity).not_to receive(:bulk_update_activity_documents)
+        account.update_activity_documents
+      end
+    end
   end
 
   describe '#get_activities' do

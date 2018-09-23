@@ -15,5 +15,16 @@ describe Category do
 
       category.update_activity_documents
     end
+
+    context "Category has NO activities" do
+      before :each do
+        category.activities.destroy_all
+      end
+
+      it "does nothing" do
+        expect(Activity).not_to receive(:bulk_update_activity_documents)
+        category.update_activity_documents
+      end
+    end
   end
 end
