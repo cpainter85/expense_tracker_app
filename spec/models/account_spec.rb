@@ -4,6 +4,9 @@ describe Account do
   describe "relationships" do
     it { should have_many(:activities) }
   end
+  describe "validations" do
+    it { should validate_inclusion_of(:account_type).in_array(Account::ACCOUNT_TYPES) }
+  end
 
   describe '#update_activity_documents' do
     let(:account) { create(:account) }
@@ -37,7 +40,7 @@ describe Account do
     end
 
     it "queries Elasticsearch for all activities belonging to the account" do
-      expect(Activity).to receive(:search).with({ 
+      expect(Activity).to receive(:search).with({
         query: {
           bool: {
             filter: [ { term: { "account.id" => account.id } } ]

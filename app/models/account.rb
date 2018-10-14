@@ -2,8 +2,10 @@ class Account < ApplicationRecord
   has_many :activities
 
   after_commit :update_activity_documents, on: :update
-  
+
   ACCOUNT_TYPES = ["Checking", "Credit Card"]
+
+  validates :account_type, inclusion:{ in: ACCOUNT_TYPES, message: "%{value} is not a valid account_type" }
 
   def update_activity_documents
     if activities.size > 0
@@ -17,7 +19,7 @@ class Account < ApplicationRecord
   def get_activities(args={})
     page = args[:page] || 1
 
-    response = Activity.search({ 
+    response = Activity.search({
       query: {
         bool: {
           filter: [ { term: { "account.id" => self.id } } ]
