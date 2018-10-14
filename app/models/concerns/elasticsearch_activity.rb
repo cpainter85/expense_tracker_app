@@ -61,8 +61,10 @@ module ElasticsearchActivity
   end
 
   module ClassMethods
-    def versioned_index
-      "#{__elasticsearch__.index_name}_v#{const_get("ElasticsearchActivity::VERSION")}"
+    def versioned_index(args={})
+      version_number ||= args[:preceding] ? const_get("ElasticsearchActivity::VERSION") - 1 : const_get("ElasticsearchActivity::VERSION")
+
+      "#{__elasticsearch__.index_name}_v#{version_number}"
     end
 
     def bulk_update_activity_documents(args)

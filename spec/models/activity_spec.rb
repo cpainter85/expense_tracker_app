@@ -133,6 +133,12 @@ describe Activity do
         it "returns the index name with the version" do
           expect(Activity.versioned_index).to eq "activities_v5"
         end
+
+        context "given an argument of 'preceding: true'" do
+          it "returns the index_name with a version 1 less than the current version" do
+            expect(Activity.versioned_index(preceding: true)).to eq "activities_v4"
+          end
+        end
       end
 
       describe "::bulk_update_activity_documents" do
@@ -163,6 +169,6 @@ describe Activity do
         end
       end
     end
-    
+
   end
 end
