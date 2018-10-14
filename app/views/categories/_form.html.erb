@@ -1,14 +1,4 @@
-<%= form_for @category do |f| %>
-  <div class="form-group row">
-    <%= f.label :name, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :name, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="form-group row">
-    <div class="col-sm-10">
-      <%= f.submit "#{@category.persisted? ? 'Update' : 'Create'} Category", class: "btn btn-primary" %>
-    </div>
-  </div>
+<%= simple_form_for @category do |f| %>
+  <%= f.input :name %>
+  <%= f.button :submit, class: "btn btn-outline-primary" %>
 <% end %>
