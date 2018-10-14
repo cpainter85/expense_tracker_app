@@ -19,6 +19,26 @@ describe Activity do
           )
         )
       end
+
+      it "includes the 'autocomplete analyzer'" do
+        expect(settings.dig(:index, :analysis, :analyzer)).to include(
+          autocomplete: hash_including(
+            tokenizer: "autocomplete",
+            filter: ["lowercase"]
+          )
+        )
+      end
+
+      it "includes the 'autocomplete tokenizer'" do
+        expect(settings.dig(:index, :analysis, :tokenizer)).to include(
+          autocomplete: hash_including(
+            type: "edge_ngram",
+            min_gram: 2,
+            max_gram: 15,
+            token_chars: ["letter", "digit"]
+          )
+        )
+      end
     end
 
     describe "mapping" do
@@ -33,7 +53,7 @@ describe Activity do
       end
 
       it "indexes merchant" do
-        expect(mapping_properties).to include(merchant: hash_including(type: "text", analyzer: "english"))
+        expect(mapping_properties).to include(merchant: hash_including(type: "text", analyzer: "autocomplete", search_analyzer: "standard"))
         expect(mapping_properties.dig(:merchant, :fields)).to include(sortable: hash_including(type: "keyword", normalizer: "keyword_normalizer"))
       end
 
