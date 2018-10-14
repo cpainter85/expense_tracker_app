@@ -35,4 +35,21 @@ class Account < ApplicationRecord
 
     response.page(page).per(25)
   end
+
+  def self.merchant_autocomplete(args)
+    if args[:term].present?
+      request = {
+        query: {
+          match: { merchant: args[:term] }
+        },
+        _source: :merchant
+      }
+
+      response = Activity.search(request)
+
+      response.per(5).results.map(&:_source).map(&:merchant)
+    else
+      []
+    end
+  end
 end
