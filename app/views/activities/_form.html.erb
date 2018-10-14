@@ -1,54 +1,10 @@
-<%= form_for [@account, @activity] do |f| %>
-  <div class="form-group">
-    <%= f.label :account, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.collection_select :account_id, Account.all, :id, :name, {prompt: true}, {class: "custom-select form-control"} %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :transaction_date, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.date_field :transaction_date, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :merchant, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :merchant, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :category, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: true}, {class: "custom-select form-control"} %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :description, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.text_field :description, class: "form-control" %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :amount, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <div class="input-group-prepend">
-        <span class="input-group-text">$</span>
-        <%= f.text_field :amount, class: "form-control" %>
-      </div>
-      
-    </div>
-  </div>
-  <div class="form-group">
-    <%= f.label :cleared, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= f.check_box :cleared, {class: "form-control", checked: @activity.cleared.nil? ? "checked" : @activity.cleared } %>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <div class="col-sm-10">
-      <%= f.submit 'Submit', class: "btn btn-primary" %>
-    </div>
-  </div>
+<%= simple_form_for [@account, @activity] do |f| %>
+  <%= f.input :account_id, collection: Account.all, prompt: "Select Account", selected: @activity.account_id %>
+  <%= f.input :transaction_date, order: [:month, :day, :year] %>
+  <%= f.input :merchant %>
+  <%= f.input :category_id, collection: Category.all, prompt: "Select Category", selected: @activity.category_id %>
+  <%= f.input :description %>
+  <%= f.input :amount, as: :currency %>
+  <%= f.input :cleared, input_html: { checked: @activity.cleared.nil? ? true : @activity.cleared } %>
+  <%= f.button :submit, class: "btn btn-outline-primary" %>
 <% end %>
