@@ -42,6 +42,8 @@ gem 'kaminari', '~> 1.1', '>= 1.1.1'
 gem 'elasticsearch-model', '~> 5.0', '>= 5.0.2'
 gem 'active_model_serializers', '~> 0.10.7'
 gem 'simple_form', '~> 4.0', '>= 4.0.1'
+gem 'jquery-ui-rails', '~> 6.0', '>= 6.0.1'
+gem 'rails-jquery-autocomplete', '~> 1.0', '>= 1.0.4'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.7', '>= 3.7.2'
